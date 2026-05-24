@@ -22,7 +22,8 @@
                 const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
                 // "getDay()" devuelve el día de la semana:
                 // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay
-                const texto = `${diasSemana[fh.getDay()]}, ${fh.getDate()}/${fh.getMonth().toString().padStart(2, "0")}/${fh.getFullYear()} ` +
+                const mes = (fh.getMonth() + 1).toString().padStart(2, "0");
+                const texto = `${diasSemana[fh.getDay()]}, ${fh.getDate()}/${mes}/${fh.getFullYear()} ` +
                     `${fh.getHours().toString().padStart(2, "0")}h ${fh.getMinutes().toString().padStart(2, "0")}m ${fh.getSeconds().toString().padStart(2, "0")}s`;
                 
                 const div = document.getElementById("infoGeneral");
