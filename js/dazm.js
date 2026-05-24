@@ -3,11 +3,16 @@
             const _claseAbreviaturas = "abreviatura";
             
             const _configuracion = new Configuracion();
-            const _carta = new CartaNavegacion(_configuracion);
+            const _carta = Persistencia.cargarCarta(_configuracion);
             
             
             inicializarPantalla();
             asignarManejadoresEventos();
+            
+            
+            function persistirEstado() {
+                Persistencia.guardarCarta(_carta);
+            }
             
             
             function inicializarPantalla() {
@@ -15,6 +20,7 @@
                 mostrarInfoNavegacion();
                 mostrarInfoRezos();
                 mostrarBotonesNavegacion();
+                actualizarInfoRezos();
             }
             
             function mostrarInfoGeneral() {
@@ -121,6 +127,7 @@
                 
                 actualizarInfoRezos();
                 _carta.rezosPaginaActual().actualizarIndices();
+                persistirEstado();
             }
             
             function asignarManejadorEventoClicImagenEstrella() {
@@ -143,6 +150,7 @@
                 
                 actualizarInfoRezos();
                 _carta.rezosPaginaActual().actualizarIndices();
+                persistirEstado();
             }
             
             function asignarManejadorEventoClicBotonRetrocederNavegacion() {
@@ -154,6 +162,7 @@
                 _carta.retrocederNavegacion();
                 mostrarInfoNavegacion();
                 actualizarInfoRezos();
+                persistirEstado();
             }
             
             function asignarManejadorEventoClicBotonContinuarRezo() {
@@ -164,6 +173,7 @@
             function manejadorEventoClicBotonContinuarRezo(e) {
                 _carta.rezosPaginaActual().continuarRezo();
                 actualizarInfoRezos();
+                persistirEstado();
             }
             
             function actualizarInfoRezos() {
@@ -200,4 +210,5 @@
                 _carta.avanzarNavegacion();
                 mostrarInfoNavegacion();
                 actualizarInfoRezos();
+                persistirEstado();
             }

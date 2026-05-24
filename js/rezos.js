@@ -11,6 +11,26 @@
                     this.indiceOracionActual = 0;
                 }
                 
+                static desdeEstado(cfg, estado) {
+                    const rezos = new Rezos(cfg);
+                    rezos.indiceOracionActual = estado.indiceOracionActual;
+                    
+                    for (let i = 0; i < rezos.oraciones.length; i++) {
+                        const oracion = rezos.oraciones[i];
+                        const estadoOracion = estado.oraciones[i];
+                        oracion.indiceRezoActual = estadoOracion.indiceRezoActual;
+                        
+                        for (let j = 0; j < oracion.rezos.length; j++) {
+                            const rezo = oracion.rezos[j];
+                            const estadoRezo = estadoOracion.rezos[j];
+                            rezo.iniciado = estadoRezo.iniciado;
+                            rezo.completado = estadoRezo.completado;
+                        }
+                    }
+                    
+                    return rezos;
+                }
+                
                 
                 continuarRezo() {
                     let ultimoRezo = null;
