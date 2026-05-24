@@ -67,10 +67,19 @@ body {
     margin-left: 0;
     margin-bottom: 5px;
     margin-right: 0;
+    flex: 1 1 18rem;
     width: min(100%, 18rem);
     min-height: 2.75rem;
     height: auto;
     cursor: pointer;
+}
+
+@media (max-width: 36rem) {
+    .botonNavegacion {
+        flex: 1 1 100%;
+        width: 100%;
+        max-width: none;
+    }
 }
 
 @media (max-width: 480px) {
