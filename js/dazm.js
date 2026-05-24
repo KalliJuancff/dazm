@@ -88,7 +88,7 @@
                 const botonContinuarRezo = document.createElement("button");
                 botonContinuarRezo.id = "botonContinuarRezo";
                 botonContinuarRezo.setAttribute("class", _claseBotonesNavegacion);
-                botonContinuarRezo.innerHTML = "Continuar";
+                botonContinuarRezo.innerHTML = "Marcar";
                 div.appendChild(botonContinuarRezo);
                 
                 const botonAdelante = document.createElement("button");
