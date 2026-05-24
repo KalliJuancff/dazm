@@ -17,6 +17,10 @@
                     localStorage.setItem(CLAVE_ESTADO, JSON.stringify(Persistencia._serializarCarta(carta)));
                 }
 
+                static borrarEstado() {
+                    localStorage.removeItem(CLAVE_ESTADO);
+                }
+
                 static _leerEstado(cfg) {
                     const raw = localStorage.getItem(CLAVE_ESTADO);
                     if (!raw || !raw.trim()) {

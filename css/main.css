@@ -32,16 +32,19 @@ body {
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-left: 15px;
+    max-width: calc(3 * 290px + 2 * 0.5rem);
 }
 
 .botonNavegacion {
-    font-size: 32px;
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 26px;
     margin: 0;
-    width: min(290px, 100%);
-    min-height: 70px;
+    width: auto;
+    min-height: 64px;
     height: auto;
-    padding: 0.35rem 0.75rem;
-    line-height: 1.25;
+    padding: 0.3rem 0.5rem;
+    line-height: 1.2;
     box-sizing: border-box;
     cursor: pointer;
 }

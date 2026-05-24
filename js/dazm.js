@@ -3,7 +3,7 @@
             const _claseAbreviaturas = "abreviatura";
             
             const _configuracion = new Configuracion();
-            const _carta = Persistencia.cargarCarta(_configuracion);
+            let _carta = Persistencia.cargarCarta(_configuracion);
             
             
             inicializarPantalla();
@@ -96,6 +96,12 @@
                 botonAdelante.setAttribute("class", _claseBotonesNavegacion);
                 botonAdelante.innerHTML = "Adelante";
                 div.appendChild(botonAdelante);
+
+                const botonResetear = document.createElement("button");
+                botonResetear.id = "botonResetear";
+                botonResetear.setAttribute("class", _claseBotonesNavegacion);
+                botonResetear.innerHTML = "Resetear";
+                div.appendChild(botonResetear);
             }
             
             
@@ -105,10 +111,11 @@
                 asignarManejadorEventoClicBotonRetrocederNavegacion();
                 asignarManejadorEventoClicBotonContinuarRezo();
                 asignarManejadorEventoClicBotonAvanzarNavegacion();
+                asignarManejadorEventoClicBotonResetear();
             }
             
             function asignarManejadorEventoClicBotonesAbreviaturasRezos() {
-                const botones = document.getElementsByTagName("button");
+                const botones = document.getElementsByClassName(_claseAbreviaturas);
                 for (let boton of botones) {
                     boton.onclick = manejadorEventoClicBotonesAbreviaturasRezos;
                 }
@@ -211,4 +218,27 @@
                 mostrarInfoNavegacion();
                 actualizarInfoRezos();
                 persistirEstado();
+            }
+
+            function asignarManejadorEventoClicBotonResetear() {
+                const botonResetear = document.getElementById("botonResetear");
+                botonResetear.onclick = manejadorEventoClicBotonResetear;
+            }
+
+            function manejadorEventoClicBotonResetear(e) {
+                if (!confirm("¿Desea resetear el progreso de hoy?")) {
+                    return;
+                }
+
+                Persistencia.borrarEstado();
+                _carta = new CartaNavegacion(_configuracion);
+                Persistencia.guardarCarta(_carta);
+
+                mostrarInfoGeneral();
+                mostrarInfoNavegacion();
+                document.getElementById("infoRezos").innerHTML = "";
+                mostrarInfoRezos();
+                actualizarInfoRezos();
+                asignarManejadorEventoClicBotonesAbreviaturasRezos();
+                asignarManejadorEventoClicImagenEstrella();
             }
