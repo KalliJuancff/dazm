@@ -27,13 +27,29 @@ body {
     margin-left: 15px;
 }
 
+#botonesNavegacion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-left: 15px;
+}
+
 .botonNavegacion {
     font-size: 32px;
-    margin-top: 5px;
-    margin-left: 15px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-    width: 290px;
-    height: 70px;
+    margin: 0;
+    width: min(290px, 100%);
+    min-height: 70px;
+    height: auto;
+    padding: 0.35rem 0.75rem;
+    line-height: 1.25;
+    box-sizing: border-box;
     cursor: pointer;
+}
+
+/* Móvil: 112px (js/dazm.js). Portátil/escritorio: un poco más pequeñas. */
+@media (min-width: 64rem) {
+    .imagenEstrella {
+        width: 100px;
+        height: auto;
+    }
 }
