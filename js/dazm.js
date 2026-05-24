@@ -58,7 +58,7 @@
                         img.id = `${x};${y}`;
                         img.setAttribute("class", _claseEstrellas);
                         img.width = 112;
-                        img.src = "Estrella_gris_oscuro.png";
+                        img.src = "assets/images/Estrella_gris_oscuro.png";
                         
                         divPrincipal.appendChild(img);
                         
@@ -172,11 +172,11 @@
                     const rezo = _carta.rezosPaginaActual().obtenerRezo(di.x, di.y);
                     
                     if (rezo.completado) {
-                        imagen.src = "Estrella_amarillo_dos_colores.png";
+                        imagen.src = "assets/images/Estrella_amarillo_dos_colores.png";
                     } else if (rezo.iniciado) {
-                        imagen.src = "Estrella_gris_claro.png";
+                        imagen.src = "assets/images/Estrella_gris_claro.png";
                     } else {
-                        imagen.src = "Estrella_gris_oscuro.png";
+                        imagen.src = "assets/images/Estrella_gris_oscuro.png";
                     }
                 }
             }
