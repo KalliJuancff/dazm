@@ -57,7 +57,6 @@
                         const img = document.createElement("img");
                         img.id = `${x};${y}`;
                         img.setAttribute("class", _claseEstrellas);
-                        img.width = 112;
                         img.src = "assets/images/Estrella_gris_oscuro.png";
                         
                         divPrincipal.appendChild(img);
