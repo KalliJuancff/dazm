@@ -85,11 +85,11 @@
                 botonAtras.innerHTML = "Atrás";
                 div.appendChild(botonAtras);
                 
-                const botonContinuarRezo = document.createElement("button");
-                botonContinuarRezo.id = "botonContinuarRezo";
-                botonContinuarRezo.setAttribute("class", _claseBotonesNavegacion);
-                botonContinuarRezo.innerHTML = "Marcar";
-                div.appendChild(botonContinuarRezo);
+                const botonMarcarRezo = document.createElement("button");
+                botonMarcarRezo.id = "botonMarcarRezo";
+                botonMarcarRezo.setAttribute("class", _claseBotonesNavegacion);
+                botonMarcarRezo.innerHTML = "Marcar";
+                div.appendChild(botonMarcarRezo);
                 
                 const botonAdelante = document.createElement("button");
                 botonAdelante.id = "botonNavegacionAdelante";
@@ -109,7 +109,7 @@
                 asignarManejadorEventoClicBotonesAbreviaturasRezos();
                 asignarManejadorEventoClicImagenEstrella();
                 asignarManejadorEventoClicBotonRetrocederNavegacion();
-                asignarManejadorEventoClicBotonContinuarRezo();
+                asignarManejadorEventoClicBotonMarcarRezo();
                 asignarManejadorEventoClicBotonAvanzarNavegacion();
                 asignarManejadorEventoClicBotonResetear();
             }
@@ -172,12 +172,12 @@
                 persistirEstado();
             }
             
-            function asignarManejadorEventoClicBotonContinuarRezo() {
-                const botonContinuarRezo = document.getElementById("botonContinuarRezo");
-                botonContinuarRezo.onclick = manejadorEventoClicBotonContinuarRezo;
+            function asignarManejadorEventoClicBotonMarcarRezo() {
+                const botonMarcarRezo = document.getElementById("botonMarcarRezo");
+                botonMarcarRezo.onclick = manejadorEventoClicBotonMarcarRezo;
             }
             
-            function manejadorEventoClicBotonContinuarRezo(e) {
+            function manejadorEventoClicBotonMarcarRezo(e) {
                 _carta.rezosPaginaActual().continuarRezo();
                 actualizarInfoRezos();
                 persistirEstado();
