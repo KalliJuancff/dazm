@@ -1,93 +1,39 @@
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-html {
-    -webkit-text-size-adjust: 100%;
-}
-
 body {
-    font-family: Segoe UI, SegoeUI, Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: clamp(1rem, 2.5vw, 2rem);
-    margin: 0;
-    padding: 0.5rem;
-    max-width: 100%;
-    overflow-x: hidden;
+    font-family: Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 32px;
 }
 
 #infoGeneral {
-    font-size: clamp(1.5rem, 5vw, 3.625rem);
+    font-size: 58px;
     font-weight: bold;
-    margin-left: 0;
+    margin-left: 15px;
 }
 
 .abreviatura {
     cursor: pointer;
-    font-size: clamp(0.875rem, 2vw, 1rem);
-    min-width: 2.75rem;
-    min-height: 2.75rem;
-    width: auto;
-    height: auto;
+    font-size: 16px;
+    width: 50px;
+    height: 30px;
 }
 
 #infoRezos {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.25rem;
     margin-top: 30px;
-    margin-left: 0;
+    margin-left: 15px;
     margin-bottom: 30px;
-}
-
-#infoRezos > div {
-    flex-basis: 100%;
-}
-
-.imagenEstrella {
-    width: clamp(2.5rem, 11vw, 7rem);
-    height: auto;
-    max-width: 100%;
 }
 
 #infoNavegacion {
     font-weight: bold;
-    margin-left: 0;
-}
-
-#botonesNavegacion {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    margin-left: 15px;
 }
 
 .botonNavegacion {
-    font-size: clamp(1rem, 2.5vw, 2rem);
+    font-size: 32px;
     margin-top: 5px;
-    margin-left: 0;
+    margin-left: 15px;
     margin-bottom: 5px;
-    margin-right: 0;
-    flex: 1 1 18rem;
-    width: min(100%, 18rem);
-    min-height: 2.75rem;
-    height: auto;
+    margin-right: 5px;
+    width: 290px;
+    height: 70px;
     cursor: pointer;
-}
-
-@media (max-width: 36rem) {
-    .botonNavegacion {
-        flex: 1 1 100%;
-        width: 100%;
-        max-width: none;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding: 0.25rem;
-    }
-
-    #infoRezos {
-        gap: 0.125rem;
-    }
 }
