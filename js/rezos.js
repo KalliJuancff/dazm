@@ -33,6 +33,10 @@
                 
                 
                 continuarRezo() {
+                    if (this.estanRezosCompletados()) {
+                        return;
+                    }
+
                     let ultimoRezo = null;
                     
                     if (!this.oracionActual().estaOracionCompletada()) {
@@ -40,16 +44,14 @@
                         
                         this.oracionActual().continuarRezo();
                         
-                        if (this.oracionActual().estaOracionCompletada() && ((this.indiceOracionActual+1) < this.oraciones.length)) {
+                        if (this.oracionActual().estaOracionCompletada()) {
                             this.indiceOracionActual++;
                         }
                     } else {
-                        if (!this.estanRezosCompletados() && ((this.indiceOracionActual+1) < this.oraciones.length)) {
-                            this.indiceOracionActual++;
-                        }
+                        this.indiceOracionActual++;
                     }
                     
-                    if (ultimoRezo !== null && ultimoRezo.completado) {
+                    if (ultimoRezo !== null && ultimoRezo.completado && !this.estanRezosCompletados()) {
                         this.continuarRezo();
                     }
                 }
@@ -70,11 +72,10 @@
                     let salir = false;
                     this.indiceOracionActual = 0;
                     
-                    this.oracionActual().actualizarIndice();
                     while (!salir) {
+                        this.oracionActual().actualizarIndice();
                         if (this.oracionActual().estaOracionCompletada()) {
                             this.indiceOracionActual++;
-                            this.oracionActual().actualizarIndice();
                         } else {
                             salir = true;
                         }
