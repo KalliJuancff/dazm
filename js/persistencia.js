@@ -40,19 +40,7 @@
                         return null;
                     }
 
-                    const fechaSello = new Date(estado.fechaHora);
-                    if (!Persistencia._esMismoDiaCalendario(fechaSello, new Date())) {
-                        localStorage.removeItem(CLAVE_ESTADO);
-                        return null;
-                    }
-
                     return estado;
-                }
-
-                static _esMismoDiaCalendario(a, b) {
-                    return a.getFullYear() === b.getFullYear()
-                        && a.getMonth() === b.getMonth()
-                        && a.getDate() === b.getDate();
                 }
 
                 static _esEstadoValido(estado, cfg) {
