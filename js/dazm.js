@@ -156,7 +156,7 @@
                 }
                 
                 actualizarInfoRezos();
-                _carta.rezosPaginaActual().actualizarIndices();
+                _carta.rezosPaginaActual().fijarCursorEn(di.x, di.y);
                 persistirEstado();
             }
             
@@ -205,7 +205,7 @@
                 const x = tokens[0];
                 const y = tokens[1];
                 
-                return {x, y};
+                return {x: Number(x), y: Number(y)};
             }
             
             function asignarManejadorEventoClicBotonAvanzarNavegacion() {

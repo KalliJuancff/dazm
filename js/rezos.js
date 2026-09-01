@@ -37,27 +37,22 @@
                         return;
                     }
 
-                    let ultimoRezo = null;
-                    
-                    if (!this.oracionActual().estaOracionCompletada()) {
-                        ultimoRezo = this.oracionActual().rezoActual();
-                        
-                        this.oracionActual().continuarRezo();
-                        
-                        if (this.oracionActual().estaOracionCompletada()) {
-                            this.indiceOracionActual++;
+                    this.situarCursorParaContinuar();
+
+                    const rezo = this.rezoEnCursor();
+                    rezo.continuar();
+
+                    if (rezo.completado && !this.estanRezosCompletados()) {
+                        this.irASiguientePendiente();
+                        const siguiente = this.rezoEnCursor();
+                        if (siguiente && !siguiente.iniciado) {
+                            siguiente.darPorIniciado();
                         }
-                    } else {
-                        this.indiceOracionActual++;
-                    }
-                    
-                    if (ultimoRezo !== null && ultimoRezo.completado && !this.estanRezosCompletados()) {
-                        this.continuarRezo();
                     }
                 }
                 
                 estanRezosCompletados() {
-                    return this.indiceOracionActual === this.oraciones.length;
+                    return this.oraciones.every(oracion => oracion.estaOracionCompletada());
                 }
                 
                 oracionActual() {
@@ -65,23 +60,126 @@
                 }
                 
                 obtenerRezo(x, y) {
-                    return this.oraciones[y].rezos[x];
+                    return this.oraciones[Number(y)].rezos[Number(x)];
+                }
+                
+                fijarCursorEn(x, y) {
+                    x = Number(x);
+                    y = Number(y);
+                    const rezo = this.obtenerRezo(x, y);
+
+                    if (rezo.iniciado && !rezo.completado) {
+                        this.fijarCursor(x, y);
+                        return;
+                    }
+
+                    if (rezo.completado) {
+                        this.fijarCursor(x, y);
+                        if (!this.estanRezosCompletados()) {
+                            this.irASiguientePendiente();
+                        }
+                        return;
+                    }
+
+                    this.actualizarIndices();
                 }
                 
                 actualizarIndices() {
-                    let salir = false;
-                    this.indiceOracionActual = 0;
-                    
-                    while (!salir) {
-                        this.oracionActual().actualizarIndice();
-                        if (this.oracionActual().estaOracionCompletada()) {
-                            this.indiceOracionActual++;
-                        } else {
-                            salir = true;
+                    const gris = this.ultimoGrisClaro();
+                    if (gris) {
+                        this.fijarCursor(gris.x, gris.y);
+                        return;
+                    }
+
+                    this.irAPendienteMasProximoAlInicio();
+                }
+
+                situarCursorParaContinuar() {
+                    if (this.cursorEsGrisClaro()) {
+                        return;
+                    }
+
+                    const gris = this.ultimoGrisClaro();
+                    if (gris) {
+                        this.fijarCursor(gris.x, gris.y);
+                        return;
+                    }
+
+                    if (!this.cursorEsPendiente()) {
+                        this.irAPendienteMasProximoAlInicio();
+                    }
+                }
+
+                listarRezos() {
+                    const lista = [];
+                    for (let y = 0; y < this.oraciones.length; y++) {
+                        const oracion = this.oraciones[y];
+                        for (let x = 0; x < oracion.rezos.length; x++) {
+                            lista.push({ x, y, rezo: oracion.rezos[x] });
                         }
-                        
-                        if (this.indiceOracionActual === this.oraciones.length) {
-                            salir = true;
+                    }
+                    return lista;
+                }
+
+                fijarCursor(x, y) {
+                    this.indiceOracionActual = y;
+                    this.oraciones[y].indiceRezoActual = x;
+                }
+
+                esCursorValido() {
+                    if (this.indiceOracionActual < 0 || this.indiceOracionActual >= this.oraciones.length) {
+                        return false;
+                    }
+
+                    const oracion = this.oracionActual();
+                    return oracion.indiceRezoActual >= 0 && oracion.indiceRezoActual < oracion.rezos.length;
+                }
+
+                rezoEnCursor() {
+                    return this.esCursorValido() ? this.oracionActual().rezoActual() : null;
+                }
+
+                cursorEsGrisClaro() {
+                    const rezo = this.rezoEnCursor();
+                    return rezo !== null && rezo.iniciado && !rezo.completado;
+                }
+
+                cursorEsPendiente() {
+                    const rezo = this.rezoEnCursor();
+                    return rezo !== null && !rezo.completado;
+                }
+
+                ultimoGrisClaro() {
+                    const grises = this.listarRezos().filter(item => item.rezo.iniciado && !item.rezo.completado);
+                    return grises.length > 0 ? grises[grises.length - 1] : null;
+                }
+
+                irAPendienteMasProximoAlInicio() {
+                    const pendiente = this.listarRezos().find(item => !item.rezo.completado);
+                    if (pendiente) {
+                        this.fijarCursor(pendiente.x, pendiente.y);
+                    } else {
+                        this.indiceOracionActual = this.oraciones.length;
+                    }
+                }
+
+                irASiguientePendiente() {
+                    const todos = this.listarRezos();
+                    if (!this.esCursorValido()) {
+                        this.irAPendienteMasProximoAlInicio();
+                        return;
+                    }
+
+                    const indiceActual = todos.findIndex(item =>
+                        item.x === this.oracionActual().indiceRezoActual &&
+                        item.y === this.indiceOracionActual
+                    );
+
+                    for (let i = 1; i <= todos.length; i++) {
+                        const item = todos[(indiceActual + i) % todos.length];
+                        if (!item.rezo.completado) {
+                            this.fijarCursor(item.x, item.y);
+                            return;
                         }
                     }
                 }
@@ -111,47 +209,20 @@
                     this.indiceRezoActual = 0;
                 }
                 
-                continuarRezo() {
-                    if (!this.rezoActual().completado) {
-                        this.rezoActual().continuar();
-                    }
-                    
-                    if (!this.estaOracionCompletada()) {
-                        if (this.rezoActual().completado) {
-                            this.indiceRezoActual++;
-                        }
-                    }
-                }
-                
                 completar() {
-                    while (!this.estaOracionCompletada()) {
-                        this.continuarRezo();
+                    for (const rezo of this.rezos) {
+                        if (!rezo.completado) {
+                            rezo.darPorCompletado();
+                        }
                     }
                 }
                 
                 estaOracionCompletada() {
-                    return this.indiceRezoActual === this.rezos.length;
+                    return this.rezos.every(rezo => rezo.completado);
                 }
                 
                 rezoActual() {
                     return this.rezos[this.indiceRezoActual];
-                }
-                
-                actualizarIndice() {
-                    let salir = false;
-                    this.indiceRezoActual = 0;
-                    
-                    while (!salir) {
-                        if (this.rezoActual().completado) {
-                            this.indiceRezoActual++;
-                        } else {
-                            salir = true;
-                        }
-                        
-                        if (this.indiceRezoActual === this.rezos.length) {
-                            salir = true;
-                        }
-                    }
                 }
             }
             
