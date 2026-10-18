@@ -9,11 +9,27 @@ body {
     margin-left: 15px;
 }
 
-.abreviatura {
+.abreviatura,
+.botonTodos {
     cursor: pointer;
     font-size: 16px;
-    width: 50px;
     height: 30px;
+}
+
+.abreviatura {
+    width: 50px;
+}
+
+.botonTodos {
+    width: auto;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+#cabeceraPrimeraFila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #infoRezos {
