@@ -97,6 +97,12 @@
                 botonAdelante.innerHTML = "Adelante";
                 div.appendChild(botonAdelante);
 
+                const botonEliminar = document.createElement("button");
+                botonEliminar.id = "botonEliminar";
+                botonEliminar.setAttribute("class", _claseBotonesNavegacion);
+                botonEliminar.innerHTML = "Eliminar";
+                div.appendChild(botonEliminar);
+
                 const botonResetear = document.createElement("button");
                 botonResetear.id = "botonResetear";
                 botonResetear.setAttribute("class", _claseBotonesNavegacion);
