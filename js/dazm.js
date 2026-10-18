@@ -233,6 +233,10 @@
             }
             
             function manejadorEventoClicBotonEliminar(e) {
+                if (!confirm("¿Está seguro de que desea eliminar la página actual?")) {
+                    return;
+                }
+                
                 _carta.eliminarPaginaActual();
                 mostrarInfoNavegacion();
                 actualizarInfoRezos();
