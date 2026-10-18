@@ -233,6 +233,10 @@
             }
             
             function manejadorEventoClicBotonEliminar(e) {
+                if (_carta.paginasTotales <= 1) {
+                    return;
+                }
+                
                 if (!confirm("¿Está seguro de que desea eliminar la página actual?")) {
                     return;
                 }
