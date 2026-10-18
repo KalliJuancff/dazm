@@ -233,7 +233,7 @@
             }
             
             function manejadorEventoClicBotonEliminar(e) {
-                if (_carta.paginasTotales <= 1) {
+                if (!_carta.puedeEliminarPaginaActual()) {
                     return;
                 }
                 

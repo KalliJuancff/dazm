@@ -33,8 +33,12 @@
                     }
                 }
                 
+                puedeEliminarPaginaActual() {
+                    return this.paginasTotales > 1 && this.rezosPaginaActual().estanRezosCompletados();
+                }
+                
                 eliminarPaginaActual() {
-                    if (this.paginasTotales <= 1) {
+                    if (!this.puedeEliminarPaginaActual()) {
                         return;
                     }
                     
