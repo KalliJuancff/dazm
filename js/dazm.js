@@ -196,14 +196,21 @@
             }
             
             function manejadorEventoClicBotonTodos(e) {
-                for (const oracion of _carta.rezosPaginaActual().oraciones) {
-                    if (!oracion.estaOracionCompletada()) {
-                        oracion.completar();
+                const rezos = _carta.rezosPaginaActual();
+                if (rezos.estanRezosCompletados()) {
+                    for (const oracion of rezos.oraciones) {
+                        oracion.resetear();
+                    }
+                } else {
+                    for (const oracion of rezos.oraciones) {
+                        if (!oracion.estaOracionCompletada()) {
+                            oracion.completar();
+                        }
                     }
                 }
                 
                 actualizarInfoRezos();
-                _carta.rezosPaginaActual().actualizarIndices();
+                rezos.actualizarIndices();
                 persistirEstado();
             }
             
