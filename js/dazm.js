@@ -97,6 +97,12 @@
                 botonAdelante.innerHTML = "Adelante";
                 div.appendChild(botonAdelante);
 
+                const botonEliminar = document.createElement("button");
+                botonEliminar.id = "botonEliminar";
+                botonEliminar.setAttribute("class", _claseBotonesNavegacion);
+                botonEliminar.innerHTML = "Eliminar";
+                div.appendChild(botonEliminar);
+
                 const botonResetear = document.createElement("button");
                 botonResetear.id = "botonResetear";
                 botonResetear.setAttribute("class", _claseBotonesNavegacion);
@@ -111,6 +117,7 @@
                 asignarManejadorEventoClicBotonRetrocederNavegacion();
                 asignarManejadorEventoClicBotonMarcarRezo();
                 asignarManejadorEventoClicBotonAvanzarNavegacion();
+                asignarManejadorEventoClicBotonEliminar();
                 asignarManejadorEventoClicBotonResetear();
             }
             
@@ -220,6 +227,26 @@
                 persistirEstado();
             }
 
+            function asignarManejadorEventoClicBotonEliminar() {
+                const botonEliminar = document.getElementById("botonEliminar");
+                botonEliminar.onclick = manejadorEventoClicBotonEliminar;
+            }
+            
+            function manejadorEventoClicBotonEliminar(e) {
+                if (!_carta.puedeEliminarPaginaActual()) {
+                    return;
+                }
+                
+                if (!confirm("¿Está seguro de que desea eliminar la página actual?")) {
+                    return;
+                }
+                
+                _carta.eliminarPaginaActual();
+                mostrarInfoNavegacion();
+                actualizarInfoRezos();
+                persistirEstado();
+            }
+            
             function asignarManejadorEventoClicBotonResetear() {
                 const botonResetear = document.getElementById("botonResetear");
                 botonResetear.onclick = manejadorEventoClicBotonResetear;

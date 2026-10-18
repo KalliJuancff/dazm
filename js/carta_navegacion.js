@@ -33,6 +33,24 @@
                     }
                 }
                 
+                puedeEliminarPaginaActual() {
+                    return this.paginasTotales > 1 && this.rezosPaginaActual().estanRezosCompletados();
+                }
+                
+                eliminarPaginaActual() {
+                    if (!this.puedeEliminarPaginaActual()) {
+                        return;
+                    }
+                    
+                    const esUltima = this.paginaActual === this.paginasTotales;
+                    this.datos.splice(this.paginaActual - 1, 1);
+                    this.paginasTotales--;
+                    
+                    if (esUltima) {
+                        this.paginaActual--;
+                    }
+                }
+                
                 
                 rezosPaginaActual() {
                     return this.datos[this.paginaActual - 1];
