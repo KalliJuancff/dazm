@@ -57,6 +57,16 @@
                     texto.setAttribute("class", _claseAbreviaturas);
                     texto.innerHTML = `${oracion.abreviatura}'s:`;
                     divFila.appendChild(texto);
+
+                    if (y === 0) {
+                        divFila.id = "cabeceraPrimeraFila";
+
+                        const botonTodos = document.createElement("button");
+                        botonTodos.id = "botonTodos";
+                        botonTodos.setAttribute("class", "botonTodos");
+                        botonTodos.innerHTML = "Todos:";
+                        divFila.appendChild(botonTodos);
+                    }
                     
                     let x = 0;
                     
@@ -74,6 +84,40 @@
                     
                     y++;
                 }
+
+                alinearBotonTodos();
+            }
+
+            function alinearBotonTodos() {
+                const cabecera = document.getElementById("cabeceraPrimeraFila");
+                if (!cabecera) {
+                    return;
+                }
+
+                const imagenes = document.querySelectorAll("#infoRezos img." + _claseEstrellas);
+                const estrellasPrimeraOracion = [];
+                for (const imagen of imagenes) {
+                    if (Number(imagen.id.split(";")[1]) === 0) {
+                        estrellasPrimeraOracion.push(imagen);
+                    }
+                }
+
+                if (estrellasPrimeraOracion.length === 0) {
+                    return;
+                }
+
+                const topPrimeraFila = estrellasPrimeraOracion[0].getBoundingClientRect().top;
+                let derecha = estrellasPrimeraOracion[0].getBoundingClientRect().right;
+                for (let i = 1; i < estrellasPrimeraOracion.length; i++) {
+                    const rect = estrellasPrimeraOracion[i].getBoundingClientRect();
+                    if (rect.top > topPrimeraFila + 1) {
+                        break;
+                    }
+                    derecha = rect.right;
+                }
+
+                const izquierda = cabecera.getBoundingClientRect().left;
+                cabecera.style.width = `${Math.ceil(derecha - izquierda)}px`;
             }
             
             function mostrarBotonesNavegacion() {
@@ -112,7 +156,9 @@
             
             
             function asignarManejadoresEventos() {
+                window.addEventListener("resize", alinearBotonTodos);
                 asignarManejadorEventoClicBotonesAbreviaturasRezos();
+                asignarManejadorEventoClicBotonTodos();
                 asignarManejadorEventoClicImagenEstrella();
                 asignarManejadorEventoClicBotonRetrocederNavegacion();
                 asignarManejadorEventoClicBotonMarcarRezo();
@@ -141,6 +187,30 @@
                 
                 actualizarInfoRezos();
                 _carta.rezosPaginaActual().actualizarIndices();
+                persistirEstado();
+            }
+            
+            function asignarManejadorEventoClicBotonTodos() {
+                const botonTodos = document.getElementById("botonTodos");
+                botonTodos.onclick = manejadorEventoClicBotonTodos;
+            }
+            
+            function manejadorEventoClicBotonTodos(e) {
+                const rezos = _carta.rezosPaginaActual();
+                if (rezos.estanRezosCompletados()) {
+                    for (const oracion of rezos.oraciones) {
+                        oracion.resetear();
+                    }
+                } else {
+                    for (const oracion of rezos.oraciones) {
+                        if (!oracion.estaOracionCompletada()) {
+                            oracion.completar();
+                        }
+                    }
+                }
+                
+                actualizarInfoRezos();
+                rezos.actualizarIndices();
                 persistirEstado();
             }
             
@@ -267,5 +337,6 @@
                 mostrarInfoRezos();
                 actualizarInfoRezos();
                 asignarManejadorEventoClicBotonesAbreviaturasRezos();
+                asignarManejadorEventoClicBotonTodos();
                 asignarManejadorEventoClicImagenEstrella();
             }
