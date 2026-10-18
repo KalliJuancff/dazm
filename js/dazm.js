@@ -158,6 +158,7 @@
             function asignarManejadoresEventos() {
                 window.addEventListener("resize", alinearBotonTodos);
                 asignarManejadorEventoClicBotonesAbreviaturasRezos();
+                asignarManejadorEventoClicBotonTodos();
                 asignarManejadorEventoClicImagenEstrella();
                 asignarManejadorEventoClicBotonRetrocederNavegacion();
                 asignarManejadorEventoClicBotonMarcarRezo();
@@ -182,6 +183,23 @@
                     oracion.completar();
                 } else {
                     oracion.resetear();
+                }
+                
+                actualizarInfoRezos();
+                _carta.rezosPaginaActual().actualizarIndices();
+                persistirEstado();
+            }
+            
+            function asignarManejadorEventoClicBotonTodos() {
+                const botonTodos = document.getElementById("botonTodos");
+                botonTodos.onclick = manejadorEventoClicBotonTodos;
+            }
+            
+            function manejadorEventoClicBotonTodos(e) {
+                for (const oracion of _carta.rezosPaginaActual().oraciones) {
+                    if (!oracion.estaOracionCompletada()) {
+                        oracion.completar();
+                    }
                 }
                 
                 actualizarInfoRezos();
@@ -312,5 +330,6 @@
                 mostrarInfoRezos();
                 actualizarInfoRezos();
                 asignarManejadorEventoClicBotonesAbreviaturasRezos();
+                asignarManejadorEventoClicBotonTodos();
                 asignarManejadorEventoClicImagenEstrella();
             }
