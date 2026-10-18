@@ -117,6 +117,7 @@
                 asignarManejadorEventoClicBotonRetrocederNavegacion();
                 asignarManejadorEventoClicBotonMarcarRezo();
                 asignarManejadorEventoClicBotonAvanzarNavegacion();
+                asignarManejadorEventoClicBotonEliminar();
                 asignarManejadorEventoClicBotonResetear();
             }
             
@@ -226,6 +227,18 @@
                 persistirEstado();
             }
 
+            function asignarManejadorEventoClicBotonEliminar() {
+                const botonEliminar = document.getElementById("botonEliminar");
+                botonEliminar.onclick = manejadorEventoClicBotonEliminar;
+            }
+            
+            function manejadorEventoClicBotonEliminar(e) {
+                _carta.eliminarPaginaActual();
+                mostrarInfoNavegacion();
+                actualizarInfoRezos();
+                persistirEstado();
+            }
+            
             function asignarManejadorEventoClicBotonResetear() {
                 const botonResetear = document.getElementById("botonResetear");
                 botonResetear.onclick = manejadorEventoClicBotonResetear;

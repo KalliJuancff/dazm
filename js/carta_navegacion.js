@@ -33,6 +33,15 @@
                     }
                 }
                 
+                eliminarPaginaActual() {
+                    if (this.paginaActual === this.paginasTotales) {
+                        return;
+                    }
+                    
+                    this.datos.splice(this.paginaActual - 1, 1);
+                    this.paginasTotales--;
+                }
+                
                 
                 rezosPaginaActual() {
                     return this.datos[this.paginaActual - 1];
